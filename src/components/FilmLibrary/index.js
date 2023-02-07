@@ -61,7 +61,7 @@ function FilmLibrary() {
               setIsActive(true)
             }}
           >
-            ALL
+            TOP
             <span className="section-count">{movieRaw.length}</span>
           </button>
 
