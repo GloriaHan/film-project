@@ -12,7 +12,7 @@ function FilmLibrary() {
   const [isActive, setIsActive] = useState(true)
   const [movieRaw, setMovieRaw] = useState([])
   const [page, setPage] = useState(1)
-  const [releaseYear, setReleaseYear] = useState(2022)
+  const [releaseYear, setReleaseYear] = useState(2023)
   const [yearValue, setYearValue] = useState()
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()

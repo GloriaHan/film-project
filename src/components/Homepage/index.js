@@ -6,8 +6,8 @@ export default function Homepage() {
   return (
     <div className="homepage">
       <div className="header">
-        <h2>WELCOME TO THE MOVIE NIGHT !</h2>
-        <h3>🍿 ENJOY THE MOVIES 🍿</h3>
+        <h1>WELCOME TO THE MOVIE NIGHT !</h1>
+        <h2>🍿 ENJOY THE MOVIES 🍿</h2>
         <div className="toFilms">
           <Link to="/films">FILMS</Link>
         </div>
