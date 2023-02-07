@@ -1,24 +1,25 @@
 import './index.css'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 
 const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY
 
 export function FilmDetail() {
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const [selectedFilm, setSelectedFilm] = useState()
   const bdURL = `https://image.tmdb.org/t/p/w1280${selectedFilm?.backdrop_path}`
   const ptURL = `https://image.tmdb.org/t/p/w780${selectedFilm?.poster_path}`
   let params = useParams()
 
-  const fetchDetails = async () => {
+  const fetchDetails = useCallback(async () => {
     const url = `https://api.themoviedb.org/3/movie/${params.filmId}?api_key=${TMDB_API_KEY}`
-    setLoading(true)
+    // setLoading(true)
     const res = await fetch(url)
     const data = await res.json()
-    setLoading(false)
+    // setLoading(false)
     return data
-  }
+  },[params.filmId]
+  )
 
   useEffect(() => {
     if (params.filmId) {
@@ -27,7 +28,7 @@ export function FilmDetail() {
         console.log(params)
       })
     }
-  }, [params.filmId])
+  }, [fetchDetails, params, params.filmId])
 
   if (!selectedFilm) return null
   return (
