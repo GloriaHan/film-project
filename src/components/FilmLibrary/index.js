@@ -1,5 +1,4 @@
-import { FilmDetail, FilmDetailEmpty } from '../FilmDetail'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useCallback } from 'react'
 import './index.css'
 import '../FilmRow/index.css'
 import FilmRow from '../FilmRow'
@@ -12,20 +11,20 @@ function FilmLibrary() {
   const [isActive, setIsActive] = useState(true)
   const [movieRaw, setMovieRaw] = useState([])
   const [page, setPage] = useState(1)
-  const [releaseYear, setReleaseYear] = useState(2023)
+  const [releaseYear, setReleaseYear] = useState(2022)
   const [yearValue, setYearValue] = useState()
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
-  const fetchMoives = async () => {
+  const fetchMoives = useCallback(async () => {
     const url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}&primary_release_year=${releaseYear}`
-    setLoading(true)
+    // setLoading(true)
     const res = await fetch(url)
     const data = await res.json()
-    setLoading(false)
+    // setLoading(false)
     return data
-  }
-
+  },[page, releaseYear])
+  
   useEffect(() => {
     if (page > 1) {
       fetchMoives().then((response) => {
@@ -33,13 +32,13 @@ function FilmLibrary() {
       })
       console.log(movieRaw)
     }
-  }, [page])
+  }, [fetchMoives, movieRaw, page])
 
   useEffect(() => {
     fetchMoives().then((response) => {
       setMovieRaw(response.results)
     })
-  }, [releaseYear])
+  }, [fetchMoives, releaseYear])
 
   const enterChange = (e) => {
     if (e.keyCode === 13) {
@@ -93,7 +92,7 @@ function FilmLibrary() {
             search
           </button>
         </span>
-        {isActive == true ? (
+        {isActive === true ? (
           <>
             {movieRaw.map((film) => (
               <FilmRow
