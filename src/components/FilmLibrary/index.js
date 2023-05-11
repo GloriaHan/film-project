@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import './index.css'
 import '../FilmRow/index.css'
 import FilmRow from '../FilmRow'
@@ -23,22 +23,24 @@ function FilmLibrary() {
     const data = await res.json()
     // setLoading(false)
     return data
-  },[page, releaseYear])
+  }, [page, releaseYear])
 
   useEffect(() => {
     if (page > 1) {
       fetchMoives().then((response) => {
-        setMovieRaw([...movieRaw, ...response.results])
+        const newMovieRaw = [...movieRaw, ...response.results]
+        setMovieRaw(newMovieRaw)
       })
-      console.log(movieRaw)
     }
-  }, [fetchMoives, movieRaw, page])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page])
 
   useEffect(() => {
     fetchMoives().then((response) => {
       setMovieRaw(response.results)
     })
-  }, [fetchMoives, releaseYear])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [releaseYear])
 
   const enterChange = (e) => {
     if (e.keyCode === 13) {
